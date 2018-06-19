@@ -1,4 +1,4 @@
-import { renderGlobals, mapGlobals } from "./variables";
+import { renderGlobals, mapGlobals } from "./globalVariables";
 import { Scene, Camera, Mesh, Material } from "babylonjs";
 
 export default function render(

@@ -1,11 +1,11 @@
 import * as BABYLON from "babylonjs";
-import fire from "./torpedo";
+import fire from "./Torpedo";
 import positionGenerator from "./positionGenerator";
 import randomNumberRange from "./randomNumberRange";
 
-import { towerGlobals, enemyGlobals, mapGlobals } from "./variables";
+import { towerGlobals, enemyGlobals, mapGlobals } from "./globalVariables";
 
-class Tower {
+class Submarine {
   constructor(
     level: number = 1 | 2 | 3,
     position = { x: -25, z: -25 },
@@ -267,14 +267,14 @@ function towerGenerator(scene: BABYLON.Scene, quantity: number = 0) {
   }
   towerGlobals.occupiedSpaces.unshift([newLocation.x, newLocation.z]);
 
-  new Tower(
+  new Submarine(
     3,
     {
       x: towerGlobals.occupiedSpaces[0][0],
       z: towerGlobals.occupiedSpaces[0][1]
     },
     scene
-  ) as Tower;
+  ) as Submarine;
 
   for (let index = 2; index < quantity; index += 1) {
     let newLocation = positionGenerator();
@@ -290,14 +290,14 @@ function towerGenerator(scene: BABYLON.Scene, quantity: number = 0) {
     }
     towerGlobals.occupiedSpaces.unshift([newLocation.x, newLocation.z]);
 
-    new Tower(
+    new Submarine(
       randomNumberRange(1, 3),
       {
         x: towerGlobals.occupiedSpaces[0][0],
         z: towerGlobals.occupiedSpaces[0][1]
       },
       scene
-    ) as Tower;
+    ) as Submarine;
   }
 }
 

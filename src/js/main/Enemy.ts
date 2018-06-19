@@ -8,7 +8,7 @@ import {
   towerGlobals,
   mapGlobals,
   projectileGlobals
-} from "./variables";
+} from "./globalVariables";
 
 class Enemy {
   constructor(

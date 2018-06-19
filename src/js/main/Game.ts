@@ -4,11 +4,11 @@ import "./../../vendor/pep";
 import * as BABYLON from "babylonjs";
 
 import * as FX from "./../../vendor/wafxr/wafxr";
-import { mapGlobals, projectileGlobals } from "./variables";
+import { mapGlobals, projectileGlobals } from "./globalVariables";
 
-import enemies from "./enemies";
-import towers from "./submarine";
-import map1 from "./map";
+import enemies from "./Enemy";
+import towers from "./Submarine";
+import map from "./map";
 import materialGenerator from "./materialGenerator";
 
 import runtime = require("offline-plugin/runtime");
@@ -60,7 +60,7 @@ class Game {
     this._scene.workerCollisions = true;
 
     materialGenerator(this._scene);
-    map1(this._scene, this._canvas, this._engine);
+    map(this._scene, this._canvas, this._engine);
 
     if (mapGlobals.diagnosticsOn) {
       this._scene.debugLayer.show({ popup: true, initialTab: 2 });

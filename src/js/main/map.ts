@@ -1,8 +1,8 @@
 import * as BABYLON from "babylonjs";
-import { mapGlobals, renderGlobals } from "./variables";
+import { mapGlobals, renderGlobals } from "./globalVariables";
 import render from "./render";
 
-export default function map1(scene: any = BABYLON.Scene, canvas, engine) {
+export default function map(scene: any = BABYLON.Scene, canvas, engine) {
   const groundMaterial = scene.getMaterialByID("groundMaterial");
   const skyMaterial = scene.getMaterialByID("skyMaterial");
 

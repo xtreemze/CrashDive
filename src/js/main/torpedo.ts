@@ -1,8 +1,8 @@
 import * as BABYLON from "babylonjs";
-import { projectileGlobals, enemyGlobals, mapGlobals } from "./variables";
+import { projectileGlobals, enemyGlobals, mapGlobals } from "./globalVariables";
 import * as sounds from "./sounds";
 
-class Projectile {
+class Torpedo {
   constructor(
     originMesh: BABYLON.Mesh,
     scene: BABYLON.Scene,
@@ -170,5 +170,5 @@ export default function fire(
   originMesh: BABYLON.Mesh,
   level: number = 1 | 2 | 3
 ) {
-  new Projectile(originMesh, scene, level);
+  new Torpedo(originMesh, scene, level);
 }
