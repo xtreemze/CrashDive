@@ -1,23 +1,13 @@
-import { renderGlobals, mapGlobals } from "./globalVariables";
+import { renderGlobals } from "./globalVariables";
 import {
   Scene,
   Camera,
-  Mesh,
-  Material,
   DefaultRenderingPipeline,
   DepthOfFieldEffectBlurLevel,
-  GlowLayer,
-  MeshBuilder,
-  Vector3
+  GlowLayer
 } from "babylonjs";
 
-export default function render(
-  scene: Scene,
-  camera: Camera,
-  ground: Mesh,
-  atmosphere: Mesh,
-  groundMaterial: Material
-) {
+export default function renderPipeline(scene: Scene, camera: Camera) {
   if (renderGlobals.pipelineOn) {
     const pipeline = new DefaultRenderingPipeline(
       "default", // The name of the pipeline
@@ -61,20 +51,7 @@ export default function render(
 
     glowLayer.intensity = renderGlobals.glowIntensity;
     // glowLayer.addIncludedOnlyMesh(projectile);
-    glowLayer.addExcludedMesh(ground);
-    glowLayer.addExcludedMesh(atmosphere);
-  }
-  if (mapGlobals.demoSphere) {
-    const demoSphere = MeshBuilder.CreateSphere(
-      "demoSphere",
-      {
-        segments: 6,
-        diameter: 20,
-        updatable: false
-      },
-      scene
-    );
-    demoSphere.position = new Vector3(0, 40, 0);
-    demoSphere.material = groundMaterial;
+    // glowLayer.addExcludedMesh(ground);
+    // glowLayer.addExcludedMesh(atmosphere);
   }
 }

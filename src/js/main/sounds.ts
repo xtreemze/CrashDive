@@ -1,4 +1,15 @@
 import * as FX from "./../../vendor/wafxr/wafxr";
+import { Camera, Vector3 } from "babylonjs";
+
+function soundPrep() {
+  FX.setVolume(1);
+  FX._tone.Master.mute = true;
+}
+
+function startSound() {
+  FX._tone.context.resume();
+  FX._tone.Master.mute = false;
+}
 
 function onDestroy(enemyPosition, level) {
   setTimeout(() => {
@@ -60,4 +71,24 @@ function damage(enemy) {
   }, 1);
 }
 
-export { onDestroy, shoot, damage };
+function spatialization(activeCamera: Camera) {
+  const cameraDirection = activeCamera.getForwardRay().direction as Vector3;
+  const cameraUp = activeCamera.upVector as Vector3;
+
+  FX.setListenerPosition(
+    activeCamera.position.x as number,
+    activeCamera.position.y as number,
+    activeCamera.position.z as number
+  );
+
+  FX._tone.Listener.setOrientation(
+    -cameraDirection.x as number,
+    -cameraDirection.y as number,
+    -cameraDirection.z as number,
+    cameraUp.x as number,
+    cameraUp.y as number,
+    cameraUp.z as number
+  );
+}
+
+export { onDestroy, shoot, damage, soundPrep, startSound, spatialization };
