@@ -8,7 +8,8 @@ import {
   SceneOptimizer,
   SceneOptimizerOptions,
   CannonJSPlugin,
-  ArcRotateCamera
+  ArcRotateCamera,
+  HemisphericLight
 } from "babylonjs";
 import renderPipeline from "./renderPipeline";
 import { mapGlobals } from "./globalVariables";
@@ -21,6 +22,7 @@ import runtime = require("offline-plugin/runtime");
 import { titleScreen } from "./titleScreen";
 
 import { soundPrep, spatialization } from "./sounds";
+import { light } from "./light";
 runtime.install({
   onUpdating: () => {},
   onUpdateReady: () => {
@@ -37,6 +39,7 @@ class Game {
   private _engine: Engine;
   public _scene: Scene;
   public _camera: ArcRotateCamera;
+  public _light: HemisphericLight;
 
   constructor(canvasElement: string) {
     this._canvas = document.getElementById(canvasElement) as HTMLCanvasElement;
@@ -64,6 +67,7 @@ class Game {
     this._scene.workerCollisions = true;
 
     sky(this._scene);
+    light(this._light, this._scene);
     ocean(this._scene);
     camera(this._scene, this._canvas, this._engine, this._camera);
 
@@ -95,6 +99,6 @@ window.addEventListener("DOMContentLoaded", () => {
   game.doRender();
 
   window.addEventListener("load", () => {
-    titleScreen(this._canvas);
+    // titleScreen(this._canvas);
   });
 });

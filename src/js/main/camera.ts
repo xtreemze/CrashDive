@@ -17,9 +17,9 @@ function camera(
   // Camera1
   camera = new ArcRotateCamera(
     "overhead",
-    Math.PI / 3,
-    Math.PI / 14,
-    mapGlobals.size / 6,
+    Math.PI / 2,
+    Math.PI / 2,
+    mapGlobals.size * 60,
     Vector3.Zero(),
     scene
   );

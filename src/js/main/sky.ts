@@ -1,14 +1,11 @@
-import { Mesh, Material, SkyMaterial, HemisphericLight } from "babylonjs";
+import { Mesh, Material, SkyMaterial, Scene } from "babylonjs";
 
-function sky(scene) {
+declare function require(string): string;
+
+const sunnyDay = require("./textures/TropicalSunnyDay.png");
+
+function sky(scene: Scene) {
   // Skybox
-
-  // Light
-  const light = new BABYLON.HemisphericLight(
-    "light",
-    new BABYLON.Vector3(0, 1, 0),
-    scene
-  ) as HemisphericLight;
 
   // Sky material
   const skyboxMaterial = new BABYLON.SkyMaterial(
@@ -79,6 +76,20 @@ function sky(scene) {
 
   // Set to Day
   setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
+}
+
+function sky2(scene: Scene) {
+  // Skybox
+  var skybox = BABYLON.Mesh.CreateBox("skyBox", 5000.0 * 2, scene);
+  var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+  skyboxMaterial.backFaceCulling = false;
+  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(sunnyDay, scene);
+  skyboxMaterial.reflectionTexture.coordinatesMode =
+    BABYLON.Texture.SKYBOX_MODE;
+  skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+  skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+  skyboxMaterial.disableLighting = true;
+  skybox.material = skyboxMaterial;
 }
 
 export { sky };

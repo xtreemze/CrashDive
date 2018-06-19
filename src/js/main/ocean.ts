@@ -25,20 +25,20 @@ function ocean(scene: Scene) {
     scene,
     false
   ) as GroundMesh;
-  var water = new WaterMaterial("water", scene, new Vector2(
+  var waterMaterial = new WaterMaterial("water", scene, new Vector2(
     512,
     512
   ) as Vector2);
-  water.backFaceCulling = true as boolean;
-  water.bumpTexture = new Texture(waterBumpTexture, scene) as Texture;
-  water.windForce = -10 as number;
-  water.waveHeight = 0.7 as number;
-  water.bumpHeight = 0.4 as number;
-  water.windDirection = new Vector2(1, 1) as Vector2;
-  water.waterColor = new Color3(0, 0, 221 / 255) as Color3;
-  water.colorBlendFactor = 0.0 as number;
-  water.addToRenderList(skybox);
-  waterMesh.material = water as Material;
+  waterMaterial.backFaceCulling = true as boolean;
+  //   waterMaterial.bumpTexture = new Texture(waterBumpTexture, scene) as Texture;
+  waterMaterial.windForce = -10 as number;
+  waterMaterial.waveHeight = 0.7 as number;
+  waterMaterial.bumpHeight = 0.4 as number;
+  waterMaterial.windDirection = new Vector2(1, 1) as Vector2;
+  waterMaterial.waterColor = new Color3(0.1, 0.1, 0.8) as Color3;
+  waterMaterial.colorBlendFactor = 0.2 as number;
+  waterMaterial.addToRenderList(skybox);
+  waterMesh.material = waterMaterial as Material;
 }
 
 export { ocean };
