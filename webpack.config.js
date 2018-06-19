@@ -133,31 +133,31 @@ module.exports = function e() {
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
           use: [
-            "file-loader",
-            {
-              loader: "image-webpack-loader",
-              options: {
-                // mozjpeg: {
-                //   progressive: true,
-                //   quality: 65
-                // },
-                // // optipng.enabled: false will disable optipng
-                // optipng: {
-                //   enabled: false
-                // },
-                // pngquant: {
-                //   quality: "65-90",
-                //   speed: 4
-                // },
-                // gifsicle: {
-                //   interlaced: false
-                // },
-                // // the webp option will enable WEBP
-                // webp: {
-                //   quality: 75
-                // }
-              }
-            }
+            "file-loader?name=[name].[ext]"
+            // {
+            // loader: "image-webpack-loader",
+            // options: {
+            // mozjpeg: {
+            //   progressive: true,
+            //   quality: 65
+            // },
+            // // optipng.enabled: false will disable optipng
+            // optipng: {
+            //   enabled: false
+            // },
+            // pngquant: {
+            //   quality: "65-90",
+            //   speed: 4
+            // },
+            // gifsicle: {
+            //   interlaced: false
+            // },
+            // // the webp option will enable WEBP
+            // webp: {
+            //   quality: 75
+            // }
+            // }
+            // }
           ]
         },
         {
@@ -177,7 +177,7 @@ module.exports = function e() {
         caches: "all",
         responseStrategy: "network-first",
         updateStrategy: "all",
-        minify: "true",
+        minify: "false",
         ServiceWorker: {
           events: "true"
         }

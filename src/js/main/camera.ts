@@ -19,8 +19,8 @@ function camera(
     "overhead",
     Math.PI / 2,
     Math.PI / 2,
-    mapGlobals.size * 60,
-    Vector3.Zero(),
+    1000,
+    new Vector3(0, 500, 0),
     scene
   );
 

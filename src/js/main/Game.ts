@@ -44,17 +44,16 @@ class Game {
   constructor(canvasElement: string) {
     this._canvas = document.getElementById(canvasElement) as HTMLCanvasElement;
     this._engine = new Engine(this._canvas, true, {
-      preserveDrawingBuffer: true,
-      stencil: true,
-      doNotHandleContextLost: true
+      // preserveDrawingBuffer: true,
+      // stencil: true,
+      // doNotHandleContextLost: true
     });
-    this._engine.enableOfflineSupport = false;
-    this._engine.disableManifestCheck = true;
+    // this._engine.enableOfflineSupport = false;
+    // this._engine.disableManifestCheck = true;
   }
 
   createScene(): void {
     this._scene = new Scene(this._engine);
-
     if (mapGlobals.optimizerOn) {
       const options = SceneOptimizerOptions.HighDegradationAllowed();
       const optimizer = new SceneOptimizer(this._scene, options);
@@ -66,10 +65,10 @@ class Game {
 
     this._scene.workerCollisions = true;
 
-    sky(this._scene);
-    light(this._light, this._scene);
-    ocean(this._scene);
     camera(this._scene, this._canvas, this._engine, this._camera);
+    sky(this._scene);
+    ocean(this._scene);
+    light(this._light, this._scene);
 
     if (mapGlobals.diagnosticsOn) {
       this._scene.debugLayer.show({ popup: true, initialTab: 2 });
@@ -77,11 +76,10 @@ class Game {
   }
 
   doRender(): void {
-    renderPipeline(this._scene, this._camera);
     // Run the render loop.
     this._engine.runRenderLoop(() => {
-      spatialization(this._scene.activeCamera);
       this._scene.render();
+      // spatialization(this._scene.activeCamera);
     });
 
     // The canvas/window resize event handler.
@@ -92,10 +90,12 @@ class Game {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // renderPipeline(this._scene, this._camera);
+
   let game = new Game("renderCanvas");
 
   game.createScene();
-
+  // soundPrep();
   game.doRender();
 
   window.addEventListener("load", () => {

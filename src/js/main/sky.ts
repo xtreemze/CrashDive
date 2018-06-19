@@ -43,7 +43,7 @@ function sky(scene: Scene) {
     animation.setKeys(keys);
 
     scene.stopAnimation(skybox);
-    scene.beginDirectAnimation(skybox, [animation], 0, 100, false, 1);
+    scene.beginDirectAnimation(skybox, [animation], 0, 100, false, 0.2);
   };
 
   window.addEventListener("keydown", function(evt) {
