@@ -1,7 +1,14 @@
 // import "babylonjs-inspector";
 import "./../../vendor/pep";
 
-import * as BABYLON from "babylonjs";
+import {
+  Engine,
+  Scene,
+  Vector3,
+  SceneOptimizer,
+  SceneOptimizerOptions,
+  CannonJSPlugin
+} from "babylonjs";
 
 import * as FX from "./../../vendor/wafxr/wafxr";
 import { mapGlobals, projectileGlobals } from "./globalVariables";
@@ -25,12 +32,12 @@ runtime.install({
 
 class Game {
   public _canvas: HTMLCanvasElement;
-  private _engine: BABYLON.Engine;
-  public _scene: BABYLON.Scene;
+  private _engine: Engine;
+  public _scene: Scene;
 
   constructor(canvasElement: string) {
     this._canvas = document.getElementById(canvasElement) as HTMLCanvasElement;
-    this._engine = new BABYLON.Engine(this._canvas, true, {
+    this._engine = new Engine(this._canvas, true, {
       preserveDrawingBuffer: true,
       stencil: true,
       doNotHandleContextLost: true
@@ -40,22 +47,19 @@ class Game {
   }
 
   createScene(): void {
-    this._scene = new BABYLON.Scene(this._engine);
+    this._scene = new Scene(this._engine);
 
     FX.setVolume(1);
     FX._tone.Master.mute = true;
 
     if (mapGlobals.optimizerOn) {
-      const options = BABYLON.SceneOptimizerOptions.HighDegradationAllowed();
-      const optimizer = new BABYLON.SceneOptimizer(this._scene, options);
+      const options = SceneOptimizerOptions.HighDegradationAllowed();
+      const optimizer = new SceneOptimizer(this._scene, options);
 
       optimizer.start();
     }
 
-    this._scene.enablePhysics(
-      new BABYLON.Vector3(0, -9.81, 0),
-      new BABYLON.CannonJSPlugin()
-    );
+    this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
 
     this._scene.workerCollisions = true;
 
@@ -71,8 +75,8 @@ class Game {
     // Run the render loop.
     this._engine.runRenderLoop(() => {
       const cameraDirection = this._scene.activeCamera.getForwardRay()
-        .direction as BABYLON.Vector3;
-      const cameraUp = this._scene.activeCamera.upVector as BABYLON.Vector3;
+        .direction as Vector3;
+      const cameraUp = this._scene.activeCamera.upVector as Vector3;
 
       FX.setListenerPosition(
         this._scene.activeCamera.position.x,

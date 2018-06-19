@@ -1,18 +1,28 @@
-import * as BABYLON from "babylonjs";
+import {
+  Scene,
+  Vector3,
+  ArcRotateCamera,
+  HemisphericLight,
+  Color3,
+  DirectionalLight,
+  MeshBuilder,
+  PhysicsImpostor,
+  Tools
+} from "babylonjs";
 import { mapGlobals, renderGlobals } from "./globalVariables";
 import render from "./render";
 
-export default function map(scene: any = BABYLON.Scene, canvas, engine) {
+export default function map(scene: any = Scene, canvas, engine) {
   const groundMaterial = scene.getMaterialByID("groundMaterial");
   const skyMaterial = scene.getMaterialByID("skyMaterial");
 
   // Camera1
-  const camera = new BABYLON.ArcRotateCamera(
+  const camera = new ArcRotateCamera(
     "overhead",
     Math.PI / 3,
     Math.PI / 14,
     mapGlobals.size / 6,
-    BABYLON.Vector3.Zero(),
+    Vector3.Zero(),
     scene
   );
 
@@ -59,28 +69,28 @@ export default function map(scene: any = BABYLON.Scene, canvas, engine) {
     }
   });
 
-  const skyLight = new BABYLON.HemisphericLight(
+  const skyLight = new HemisphericLight(
     "skyLight",
-    new BABYLON.Vector3(1, -1.05, 0),
+    new Vector3(1, -1.05, 0),
     scene
   );
 
-  const upLight = new BABYLON.DirectionalLight(
+  const upLight = new DirectionalLight(
     "upLight",
-    new BABYLON.Vector3(0.5, -1.2, -0.5),
+    new Vector3(0.5, -1.2, -0.5),
     scene
   );
 
   upLight.intensity = mapGlobals.lightIntensity * 2;
-  upLight.diffuse = new BABYLON.Color3(0.82, 0.89, 0.94);
+  upLight.diffuse = new Color3(0.82, 0.89, 0.94);
 
   skyLight.intensity = mapGlobals.lightIntensity;
-  skyLight.diffuse = new BABYLON.Color3(0.82, 0.89, 0.94);
-  skyLight.groundColor = new BABYLON.Color3(0.05, 0, 0.18);
+  skyLight.diffuse = new Color3(0.82, 0.89, 0.94);
+  skyLight.groundColor = new Color3(0.05, 0, 0.18);
 
   scene.ambientColor = mapGlobals.sceneAmbient;
 
-  const atmosphere = BABYLON.MeshBuilder.CreateIcoSphere(
+  const atmosphere = MeshBuilder.CreateIcoSphere(
     "atmosphere",
     {
       radius: mapGlobals.size / 2,
@@ -94,7 +104,7 @@ export default function map(scene: any = BABYLON.Scene, canvas, engine) {
 
   atmosphere.material = skyMaterial;
 
-  const ground = BABYLON.MeshBuilder.CreateGround(
+  const ground = MeshBuilder.CreateGround(
     "ground",
     {
       height: mapGlobals.size,
@@ -108,9 +118,9 @@ export default function map(scene: any = BABYLON.Scene, canvas, engine) {
   ground.material = groundMaterial;
   ground.freezeWorldMatrix(); // freeze ground
 
-  ground.physicsImpostor = new BABYLON.PhysicsImpostor(
+  ground.physicsImpostor = new PhysicsImpostor(
     ground,
-    BABYLON.PhysicsImpostor.BoxImpostor,
+    PhysicsImpostor.BoxImpostor,
     { mass: 0, restitution: 0.9, friction: 1 },
     scene
   );
@@ -122,7 +132,7 @@ export default function map(scene: any = BABYLON.Scene, canvas, engine) {
       var imgNm = 0;
       scene.registerAfterRender(function() {
         if (imgNm++ < 50) {
-          BABYLON.Tools.CreateScreenshot(engine, camera, 1024);
+          Tools.CreateScreenshot(engine, camera, 1024);
         }
       });
     }, 6000);

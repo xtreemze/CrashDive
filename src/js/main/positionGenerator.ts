@@ -1,4 +1,3 @@
-// @ts-check
 import randomNumberRange from "./randomNumberRange";
 import { mapGlobals } from "./globalVariables";
 

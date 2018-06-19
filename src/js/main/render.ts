@@ -1,5 +1,15 @@
 import { renderGlobals, mapGlobals } from "./globalVariables";
-import { Scene, Camera, Mesh, Material } from "babylonjs";
+import {
+  Scene,
+  Camera,
+  Mesh,
+  Material,
+  DefaultRenderingPipeline,
+  DepthOfFieldEffectBlurLevel,
+  GlowLayer,
+  MeshBuilder,
+  Vector3
+} from "babylonjs";
 
 export default function render(
   scene: Scene,
@@ -9,7 +19,7 @@ export default function render(
   groundMaterial: Material
 ) {
   if (renderGlobals.pipelineOn) {
-    const pipeline = new BABYLON.DefaultRenderingPipeline(
+    const pipeline = new DefaultRenderingPipeline(
       "default", // The name of the pipeline
       false,
       scene, // The scene instance,
@@ -18,7 +28,7 @@ export default function render(
 
     // Depth of Field
     pipeline.depthOfFieldEnabled = renderGlobals.depthOfField;
-    pipeline.depthOfFieldBlurLevel = BABYLON.DepthOfFieldEffectBlurLevel.Low;
+    pipeline.depthOfFieldBlurLevel = DepthOfFieldEffectBlurLevel.Low;
     pipeline.depthOfField.focusDistance = 20 * 1000; // distance of the current focus point from the camera in millimeters considering 1 scene unit is 1 meter
     pipeline.depthOfField.focalLength = 400; // focal length of the camera in millimeters
     pipeline.depthOfField.fStop = 4.0; // aka F number of the camera defined in stops as it would be on a physical device
@@ -42,7 +52,7 @@ export default function render(
 
   // Glow
   if (renderGlobals.glow) {
-    const glowLayer = new BABYLON.GlowLayer("glow", scene, {
+    const glowLayer = new GlowLayer("glow", scene, {
       // mainTextureFixedSize: 32,
       // blurKernelSize: 8,
       // mainTextureSamples: 2
@@ -55,7 +65,7 @@ export default function render(
     glowLayer.addExcludedMesh(atmosphere);
   }
   if (mapGlobals.demoSphere) {
-    const demoSphere = BABYLON.MeshBuilder.CreateSphere(
+    const demoSphere = MeshBuilder.CreateSphere(
       "demoSphere",
       {
         segments: 6,
@@ -64,7 +74,7 @@ export default function render(
       },
       scene
     );
-    demoSphere.position = new BABYLON.Vector3(0, 40, 0);
+    demoSphere.position = new Vector3(0, 40, 0);
     demoSphere.material = groundMaterial;
   }
 }
