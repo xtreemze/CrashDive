@@ -4,19 +4,13 @@ import "./../../vendor/pep";
 import {
   Engine,
   Scene,
-  Vector3,
   SceneOptimizer,
   SceneOptimizerOptions,
-  CannonJSPlugin,
-  ArcRotateCamera,
-  HemisphericLight,
-  Mesh,
   UniversalCamera
 } from "babylonjs";
 
 import { mapGlobals } from "./globalVariables";
 import { ocean } from "./ocean";
-import { sky } from "./sky";
 import { camera } from "./camera";
 
 import runtime = require("offline-plugin/runtime");
@@ -92,7 +86,7 @@ class Game {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  // renderPipeline(this._scene, this._camera);
+  renderPipeline(this._scene, this._camera);
 
   let game = new Game("renderCanvas");
 

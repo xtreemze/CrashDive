@@ -23,7 +23,11 @@ function camera(
   //   new Vector3(0, 35, 0),
   //   scene
   // );
-  camera = new UniversalCamera("1stPerson", new Vector3(650, 25, 0), scene);
+  camera = new UniversalCamera(
+    "1stPerson",
+    new Vector3(mapGlobals.size / 8, 25, mapGlobals.size / 2.1),
+    scene
+  );
   camera.setTarget(Vector3.Zero());
   // Attach Control
   camera.attachControl(canvas, true);

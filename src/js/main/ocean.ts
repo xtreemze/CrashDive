@@ -184,9 +184,9 @@ function ocean(scene: Scene) {
   setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.48);
   setLightConfig("direction.y", light.direction.y, 0);
   setLightConfig("direction.z", light.direction.z, -1);
-  setLightColor("groundColor", light.groundColor, oceanColor);
-  setLightColor("diffuse", light.diffuse, daylightColor);
-  setLightConfig("intensity", light.intensity, 1);
+  setLightColor("groundColor", light.groundColor, oceanColorNight);
+  setLightColor("diffuse", light.diffuse, duskColor);
+  setLightConfig("intensity", light.intensity, 0.23);
 
   // Water
   const waterMesh = MeshBuilder.CreateGround(
