@@ -14,7 +14,7 @@
     "desktopBrowser": {},
     "windows": {
       "pictureAspect": "noChange",
-      "backgroundColor": "#160230",
+      "backgroundColor": "#04080f",
       "onConflict": "override",
       "assets": {
         "windows80Ie10Tile": false,
@@ -28,7 +28,7 @@
     },
     "androidChrome": {
       "pictureAspect": "noChange",
-      "themeColor": "#160230",
+      "themeColor": "#04080f",
       "manifest": {
         "name": "CrashDive",
         "display": "standalone",
@@ -44,7 +44,7 @@
     "safariPinnedTab": {
       "pictureAspect": "blackAndWhite",
       "threshold": 12.8125,
-      "themeColor": "#160230"
+      "themeColor": "#04080f"
     }
   },
   "settings": {
