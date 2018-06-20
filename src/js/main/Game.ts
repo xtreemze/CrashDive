@@ -43,7 +43,6 @@ class Game {
   private _engine: Engine;
   public _scene: Scene;
   public _camera: UniversalCamera;
-  public _light: HemisphericLight;
 
   constructor(canvasElement: string) {
     this._canvas = document.getElementById(canvasElement) as HTMLCanvasElement;
@@ -70,7 +69,6 @@ class Game {
     // this._scene.workerCollisions = true;
 
     camera(this._scene, this._canvas, this._engine, this._camera);
-    light(this._light, this._scene);
 
     ocean(this._scene);
 
