@@ -20,11 +20,11 @@ const mapGlobals = {
 };
 
 const renderGlobals = {
-  pipelineOn: false,
+  pipelineOn: true,
   glow: false,
   glowIntensity: 2.8,
   sharpenning: false,
-  antialiasing: false,
+  antialiasing: true,
   depthOfField: false,
   bloom: true,
   screenshot: false

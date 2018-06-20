@@ -6,7 +6,10 @@ import {
   Scene,
   SceneOptimizer,
   SceneOptimizerOptions,
-  UniversalCamera
+  UniversalCamera,
+  Vector3,
+  CannonJSPlugin,
+  Camera
 } from "babylonjs";
 
 import { mapGlobals } from "./globalVariables";
@@ -16,10 +19,7 @@ import { camera } from "./camera";
 import runtime = require("offline-plugin/runtime");
 
 import { titleScreen } from "./titleScreen";
-import renderPipeline from "./renderPipeline";
 import { soundPrep, spatialization } from "./sounds";
-
-import { light } from "./light";
 
 // runtime.install({
 //   onUpdating: () => {},
@@ -58,9 +58,9 @@ class Game {
       optimizer.start();
     }
 
-    // this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
+    this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
 
-    // this._scene.workerCollisions = true;
+    this._scene.workerCollisions = true;
 
     camera(this._scene, this._canvas, this._engine, this._camera);
 
@@ -86,8 +86,6 @@ class Game {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  renderPipeline(this._scene, this._camera);
-
   let game = new Game("renderCanvas");
 
   game.createScene();
@@ -95,6 +93,6 @@ window.addEventListener("DOMContentLoaded", () => {
   game.doRender();
 
   window.addEventListener("load", () => {
-    // titleScreen(this._canvas);
+    // titleScreen(game._canvas);
   });
 });

@@ -7,14 +7,14 @@ import {
   GlowLayer
 } from "babylonjs";
 
-export default function renderPipeline(scene: Scene, camera: Camera) {
+function renderPipeline(scene: Scene, camera: Camera) {
   if (renderGlobals.pipelineOn) {
     const pipeline = new DefaultRenderingPipeline(
       "default", // The name of the pipeline
       false,
       scene, // The scene instance,
       [camera] // The list of cameras to be attached to
-    );
+    ) as DefaultRenderingPipeline;
 
     // Depth of Field
     pipeline.depthOfFieldEnabled = renderGlobals.depthOfField;
@@ -55,3 +55,5 @@ export default function renderPipeline(scene: Scene, camera: Camera) {
     // glowLayer.addExcludedMesh(atmosphere);
   }
 }
+
+export { renderPipeline };

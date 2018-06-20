@@ -4,9 +4,12 @@ import {
   ArcRotateCamera,
   Tools,
   Engine,
-  UniversalCamera
+  UniversalCamera,
+  Camera,
+  DefaultRenderingPipeline
 } from "babylonjs";
 import { mapGlobals, renderGlobals } from "./globalVariables";
+import { renderPipeline } from "./renderPipeline";
 
 function camera(
   scene: Scene,
@@ -27,7 +30,7 @@ function camera(
     "1stPerson",
     new Vector3(mapGlobals.size / 8, 25, mapGlobals.size / 2.1),
     scene
-  );
+  ) as UniversalCamera;
   camera.setTarget(Vector3.Zero());
   // Attach Control
   camera.attachControl(canvas, true);
@@ -82,6 +85,17 @@ function camera(
       });
     }, 6000);
   }
+
+  // renderPipeline(this._scene, this._camera);
+  const pipeline = new DefaultRenderingPipeline(
+    "default", // The name of the pipeline
+    false,
+    scene, // The scene instance,
+    [camera] // The list of cameras to be attached to
+  ) as DefaultRenderingPipeline;
+
+  pipeline.fxaaEnabled = renderGlobals.antialiasing;
+  pipeline.samples = 4;
 }
 
 export { camera };
