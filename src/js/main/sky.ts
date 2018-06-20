@@ -2,9 +2,14 @@ import { Mesh, Material, SkyMaterial, Scene } from "babylonjs";
 
 declare function require(string): string;
 
-const sunnyDay = require("./textures/TropicalSunnyDay.png");
+const sunnyDay1 = require("./textures/TropicalSunnyDay_px.jpg");
+const sunnyDay2 = require("./textures/TropicalSunnyDay_py.jpg");
+const sunnyDay3 = require("./textures/TropicalSunnyDay_pz.jpg");
+const sunnyDay4 = require("./textures/TropicalSunnyDay_nx.jpg");
+const sunnyDay5 = require("./textures/TropicalSunnyDay_ny.jpg");
+const sunnyDay6 = require("./textures/TropicalSunnyDay_nz.jpg");
 
-function sky(scene: Scene) {
+function sky2(scene: Scene) {
   // Skybox
 
   // Sky material
@@ -78,12 +83,15 @@ function sky(scene: Scene) {
   setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
 }
 
-function sky2(scene: Scene) {
+function sky(scene: Scene) {
   // Skybox
-  var skybox = BABYLON.Mesh.CreateBox("skyBox", 5000.0 * 2, scene);
+  var skybox = BABYLON.Mesh.CreateBox("skyBox", 5000.0, scene);
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
-  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(sunnyDay, scene);
+  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
+    "./assets/TropicalSunnyDay",
+    scene
+  );
   skyboxMaterial.reflectionTexture.coordinatesMode =
     BABYLON.Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);

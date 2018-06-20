@@ -19,9 +19,9 @@ function ocean(scene: Scene) {
   // Water
   var waterMesh = Mesh.CreateGround(
     "waterMesh",
-    2048 * 5,
-    2048 * 5,
-    16 * 5,
+    2048,
+    2048,
+    16,
     scene,
     false
   ) as GroundMesh;
@@ -41,7 +41,6 @@ function ocean(scene: Scene) {
   waterMesh.material = waterMaterial as Material;
   waterMaterial.alpha = 0.5;
   //@ts-ignore
-  window.water = waterMaterial;
 }
 
 export { ocean };

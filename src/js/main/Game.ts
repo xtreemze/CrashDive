@@ -63,9 +63,9 @@ class Game {
       optimizer.start();
     }
 
-    this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
+    // this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
 
-    this._scene.workerCollisions = true;
+    // this._scene.workerCollisions = true;
 
     camera(this._scene, this._canvas, this._engine, this._camera);
     sky(this._scene);

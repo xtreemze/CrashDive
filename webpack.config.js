@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const OfflinePlugin = require("offline-plugin");
+// const OfflinePlugin = require("offline-plugin");
 
 module.exports = function e() {
   return {
@@ -133,7 +133,7 @@ module.exports = function e() {
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
           use: [
-            "file-loader?name=[name].[ext]"
+            "file-loader?name=assets/[name].[ext]"
             // {
             // loader: "image-webpack-loader",
             // options: {
@@ -171,20 +171,20 @@ module.exports = function e() {
     plugins: [
       new HtmlWebpackPlugin({
         template: "./src/index.ejs"
-      }),
-      new OfflinePlugin({
-        // externals: [],
-        caches: "all",
-        responseStrategy: "network-first",
-        updateStrategy: "all",
-        minify: "false",
-        ServiceWorker: {
-          events: "true"
-        }
-        // AppCache: {
-        //   events: "true"
-        // }
       })
+      // new OfflinePlugin({
+      //   // externals: [],
+      //   caches: "all",
+      //   responseStrategy: "network-first",
+      //   updateStrategy: "all",
+      //   minify: "false",
+      //   ServiceWorker: {
+      //     events: "true"
+      //   }
+      //   // AppCache: {
+      //   //   events: "true"
+      //   // }
+      // })
     ]
   };
 };
