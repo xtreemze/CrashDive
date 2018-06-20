@@ -11,18 +11,20 @@ import {
   ArcRotateCamera,
   HemisphericLight
 } from "babylonjs";
-import renderPipeline from "./renderPipeline";
-import { mapGlobals } from "./globalVariables";
 
+import { mapGlobals } from "./globalVariables";
 import { ocean } from "./ocean";
 import { sky } from "./sky";
 import { camera } from "./camera";
 
 import runtime = require("offline-plugin/runtime");
-import { titleScreen } from "./titleScreen";
 
+import { titleScreen } from "./titleScreen";
+import renderPipeline from "./renderPipeline";
 import { soundPrep, spatialization } from "./sounds";
+
 import { light } from "./light";
+
 runtime.install({
   onUpdating: () => {},
   onUpdateReady: () => {
