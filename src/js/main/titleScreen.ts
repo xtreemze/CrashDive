@@ -1,4 +1,4 @@
-import { torpedoGlobals, mapGlobals } from "./globalVariables";
+import { mapGlobals } from "./globalVariables";
 import { startSound } from "./sounds";
 
 function titleScreen(canvas: HTMLCanvasElement) {
@@ -8,7 +8,7 @@ function titleScreen(canvas: HTMLCanvasElement) {
     "style",
     `
       position: absolute;
-      color: ${torpedoGlobals.livingColor.toHexString()};
+      color: ${mapGlobals.ambientColor.toHexString()};
       top: 30vh;
       width: 100vw;
       text-align: center;
@@ -27,8 +27,8 @@ function titleScreen(canvas: HTMLCanvasElement) {
     `
       position: absolute;
       background-color: ${mapGlobals.sceneAmbient.toHexString()};
-      color: ${torpedoGlobals.livingColor.toHexString()};
-      border-color: ${torpedoGlobals.livingColor.toHexString()};
+      color: ${mapGlobals.ambientColor.toHexString()};
+      border-color: ${mapGlobals.ambientColor.toHexString()};
       top: 50vh;
       left: 50vw;
       width: 6rem;

@@ -15,10 +15,10 @@
   "include": ["src"],
   "exclude": ["node_modules"],
   "types": [
-    // "babylonjs",
+    "babylonjs",
     // "babylonjs-gui",
-    // "babylonjs-materials",
+    "babylonjs-materials",
     // "OIMO",
-    // "CANNON"
+    "CANNON"
   ]
 }

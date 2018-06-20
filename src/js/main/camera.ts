@@ -4,7 +4,7 @@ import {
   ArcRotateCamera,
   Tools,
   Engine,
-  Camera
+  UniversalCamera
 } from "babylonjs";
 import { mapGlobals, renderGlobals } from "./globalVariables";
 
@@ -12,31 +12,32 @@ function camera(
   scene: Scene,
   canvas: HTMLCanvasElement,
   engine: Engine,
-  camera: ArcRotateCamera
+  camera: UniversalCamera
 ) {
   // Camera1
-  camera = new ArcRotateCamera(
-    "overhead",
-    Math.PI / 2,
-    Math.PI / 2,
-    1000,
-    new Vector3(0, 500, 0),
-    scene
-  );
-
+  // camera = new ArcRotateCamera(
+  //   "overhead",
+  //   Math.PI / 2,
+  //   Math.PI / 2,
+  //   100,
+  //   new Vector3(0, 35, 0),
+  //   scene
+  // );
+  camera = new UniversalCamera("1stPerson", new Vector3(650, 35, 0), scene);
+  camera.setTarget(Vector3.Zero());
   // Attach Control
   camera.attachControl(canvas, true);
 
-  // Upper Beta Limit
-  camera.upperBetaLimit = Math.PI / 2.01;
+  // // Upper Beta Limit
+  // camera.upperBetaLimit = Math.PI / 2.01;
 
-  // Upper Radius Limit
-  camera.upperRadiusLimit = mapGlobals.size / 2;
+  // // Upper Radius Limit
+  // camera.upperRadiusLimit = mapGlobals.size / 2;
 
-  // Lower Radius Limit
-  camera.lowerRadiusLimit = mapGlobals.size / 12;
+  // // Lower Radius Limit
+  // camera.lowerRadiusLimit = mapGlobals.size / 12;
 
-  camera.panningDistanceLimit = mapGlobals.size / 5;
+  // camera.panningDistanceLimit = mapGlobals.size / 5;
 
   const rotateCamera = camera => {
     scene.registerBeforeRender(() => {
@@ -46,7 +47,7 @@ function camera(
     });
   };
 
-  if (mapGlobals.rotateCameras) {
+  if (!mapGlobals.rotateCameras) {
     rotateCamera(camera);
   }
 

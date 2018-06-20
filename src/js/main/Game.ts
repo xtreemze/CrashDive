@@ -9,7 +9,9 @@ import {
   SceneOptimizerOptions,
   CannonJSPlugin,
   ArcRotateCamera,
-  HemisphericLight
+  HemisphericLight,
+  Mesh,
+  UniversalCamera
 } from "babylonjs";
 
 import { mapGlobals } from "./globalVariables";
@@ -25,22 +27,22 @@ import { soundPrep, spatialization } from "./sounds";
 
 import { light } from "./light";
 
-runtime.install({
-  onUpdating: () => {},
-  onUpdateReady: () => {
-    runtime.applyUpdate();
-  },
-  onUpdated: () => {
-    window.location.reload();
-  },
-  onUpdateFailed: () => {}
-});
+// runtime.install({
+//   onUpdating: () => {},
+//   onUpdateReady: () => {
+//     runtime.applyUpdate();
+//   },
+//   onUpdated: () => {
+//     window.location.reload();
+//   },
+//   onUpdateFailed: () => {}
+// });
 
 class Game {
   public _canvas: HTMLCanvasElement;
   private _engine: Engine;
   public _scene: Scene;
-  public _camera: ArcRotateCamera;
+  public _camera: UniversalCamera;
   public _light: HemisphericLight;
 
   constructor(canvasElement: string) {
@@ -68,9 +70,9 @@ class Game {
     // this._scene.workerCollisions = true;
 
     camera(this._scene, this._canvas, this._engine, this._camera);
-    sky(this._scene);
-    ocean(this._scene);
     light(this._light, this._scene);
+
+    ocean(this._scene);
 
     if (mapGlobals.diagnosticsOn) {
       this._scene.debugLayer.show({ popup: true, initialTab: 2 });

@@ -1,26 +1,26 @@
-import { Mesh, Material, SkyMaterial, Scene } from "babylonjs";
+import {
+  Mesh,
+  Material,
+  Scene,
+  StandardMaterial,
+  Texture,
+  Color3,
+  Animation
+} from "babylonjs";
+
+import { CubeTexture, SkyMaterial } from "babylonjs-materials";
 
 declare function require(string): string;
 
-const sunnyDay1 = require("./textures/TropicalSunnyDay_px.jpg");
-const sunnyDay2 = require("./textures/TropicalSunnyDay_py.jpg");
-const sunnyDay3 = require("./textures/TropicalSunnyDay_pz.jpg");
-const sunnyDay4 = require("./textures/TropicalSunnyDay_nx.jpg");
-const sunnyDay5 = require("./textures/TropicalSunnyDay_ny.jpg");
-const sunnyDay6 = require("./textures/TropicalSunnyDay_nz.jpg");
-
-function sky2(scene: Scene) {
+function sky(scene: Scene, skybox: Mesh) {
   // Skybox
 
   // Sky material
-  const skyboxMaterial = new BABYLON.SkyMaterial(
-    "skyMaterial",
-    scene
-  ) as SkyMaterial;
+  const skyboxMaterial = new SkyMaterial("skyMaterial", scene) as SkyMaterial;
   skyboxMaterial.backFaceCulling = false as boolean;
   //skyboxMaterial._cachedDefines.FOG = true;
 
-  const skybox = Mesh.CreateBox("skyBox", 5000.0 * 2, scene) as Mesh;
+  skybox = Mesh.CreateBox("skyBox", 5000.0 * 2, scene) as Mesh;
 
   skyboxMaterial.backFaceCulling = false as boolean;
 
@@ -38,23 +38,23 @@ function sky2(scene: Scene) {
   var setSkyConfig = function(property, from, to) {
     var keys = [{ frame: 0, value: from }, { frame: 100, value: to }];
 
-    var animation = new BABYLON.Animation(
+    var animation = new Animation(
       "animation",
       property,
       100,
-      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-      BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-    );
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CONSTANT
+    ) as Animation;
     animation.setKeys(keys);
 
     scene.stopAnimation(skybox);
-    scene.beginDirectAnimation(skybox, [animation], 0, 100, false, 0.2);
+    scene.beginDirectAnimation(skybox, [animation], 0, 100, false, 0.4);
   };
 
   window.addEventListener("keydown", function(evt) {
     switch (evt.keyCode) {
       case 49:
-        setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
+        setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.01);
         break; // 1
       case 50:
         setSkyConfig("material.inclination", skyboxMaterial.inclination, -0.5);
@@ -78,26 +78,8 @@ function sky2(scene: Scene) {
         break;
     }
   });
-
   // Set to Day
-  setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
-}
-
-function sky(scene: Scene) {
-  // Skybox
-  var skybox = BABYLON.Mesh.CreateBox("skyBox", 5000.0, scene);
-  var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-  skyboxMaterial.backFaceCulling = false;
-  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
-    "./assets/TropicalSunnyDay",
-    scene
-  );
-  skyboxMaterial.reflectionTexture.coordinatesMode =
-    BABYLON.Texture.SKYBOX_MODE;
-  skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-  skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-  skyboxMaterial.disableLighting = true;
-  skybox.material = skyboxMaterial;
+  setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.24);
 }
 
 export { sky };
