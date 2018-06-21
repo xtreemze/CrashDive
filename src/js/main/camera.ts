@@ -28,10 +28,10 @@ function camera(
   // );
   camera = new UniversalCamera(
     "1stPerson",
-    new Vector3(mapGlobals.size / 8, 25, mapGlobals.size / 2.1),
+    new Vector3(mapGlobals.size / 12, 25, mapGlobals.size / 2.1),
     scene
   ) as UniversalCamera;
-  camera.setTarget(Vector3.Zero());
+  camera.setTarget(new Vector3(0, 25, 0));
   // Attach Control
   camera.attachControl(canvas, true);
 

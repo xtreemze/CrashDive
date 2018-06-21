@@ -86,7 +86,6 @@ function ocean(scene: Scene) {
     ) as Animation;
     animation.setKeys(keys);
 
-    scene.stopAnimation(skybox);
     scene.beginDirectAnimation(skybox, [animation], 0, 100, false, 0.2);
   };
 
@@ -115,7 +114,7 @@ function ocean(scene: Scene) {
       Animation.ANIMATIONLOOPMODE_CONSTANT
     ) as Animation;
     animation.setKeys(keys);
-    scene.stopAnimation(light);
+
     scene.beginDirectAnimation(light, [animation], 0, 100, false, 0.2);
   };
 
@@ -147,40 +146,50 @@ function ocean(scene: Scene) {
     scene
   ) as HemisphericLight;
 
-  const daylightColor = new Color3(0.9, 0.9, 0.9) as Color3;
-  const oceanColorDay = new Color3(0.2, 0.25, 0.31) as Color3;
-  const duskColor = new Color3(0.75, 0.65, 0.5) as Color3;
-  const oceanColorNight = new Color3(0.03, 0.12, 0.18) as Color3;
+  const daylightColor = new Color3(0.89, 0.91, 0.92) as Color3;
+  const oceanColorDay = new Color3(0.48, 0.54, 0.59) as Color3;
+  const duskColor = new Color3(0.74, 0.69, 0.63) as Color3;
+  const oceanColorNight = new Color3(0.25, 0.37, 0.4) as Color3;
 
   window.addEventListener("keydown", function(evt) {
+    scene.stopAnimation(skybox);
+    scene.stopAnimation(light);
     switch (evt.keyCode) {
       case 49:
         setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
         setLightDirection("direction", light.direction, new Vector3(0, 1, 0));
         setLightColor("groundColor", light.groundColor, oceanColorDay);
         setLightColor("diffuse", light.diffuse, daylightColor);
-        setLightConfig("intensity", light.intensity, 1);
+        setLightConfig("intensity", light.intensity, 0.95);
+        setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 1);
+        setSkyConfig("material.luminance", skyboxMaterial.luminance, 1);
         break; // 1
       case 50:
-        setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.48);
-        setLightDirection("direction", light.direction, new Vector3(0, 0, -1));
+        setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.485);
+        setLightDirection(
+          "direction",
+          light.direction,
+          new Vector3(0, 0.06, -1)
+        );
         setLightColor("groundColor", light.groundColor, oceanColorNight);
         setLightColor("diffuse", light.diffuse, duskColor);
-        setLightConfig("intensity", light.intensity, 1);
+        setLightConfig("intensity", light.intensity, 0.4);
+        setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 1.4);
+        setSkyConfig("material.luminance", skyboxMaterial.luminance, 0.9);
         break; // 2
 
       case 51:
-        setSkyConfig("material.luminance", skyboxMaterial.luminance, 0.1);
+        setSkyConfig("material.luminance", skyboxMaterial.luminance, 0.8);
         break; // 3
       case 52:
-        setSkyConfig("material.luminance", skyboxMaterial.luminance, 1.0);
+        setSkyConfig("material.luminance", skyboxMaterial.luminance, 1.09);
         break; // 4
 
       case 53:
-        setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 40);
+        setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 30);
         break; // 5
       case 54:
-        setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 5);
+        setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 0);
         break; // 6
 
       default:
@@ -189,11 +198,13 @@ function ocean(scene: Scene) {
   });
   // Set to Day
   // setSkyConfig("material.inclination", skyboxMaterial.inclination, -0.44);
-  light.direction = new Vector3(0, 0, -1);
+  skyboxMaterial.turbidity = 1.4;
+  skyboxMaterial.luminance = 0.9;
+  light.direction = new Vector3(0, 0.06, -1);
   light.groundColor = oceanColorNight;
   light.diffuse = duskColor;
-  light.intensity = 1;
-  setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.48);
+  light.intensity = 0.36;
+  skyboxMaterial.inclination = 0.485;
 
   // Water
   const waterMesh = MeshBuilder.CreateGround(
