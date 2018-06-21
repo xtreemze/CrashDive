@@ -2,7 +2,7 @@ import { Color3, PhysicsImpostor, Mesh } from "babylonjs";
 
 const mapGlobals = {
   diagnosticsOn: false,
-  size: 3000, // map radius
+  size: 8000.0, // map radius
   optimizerOn: false,
   cameraCutDelay: 3000,
   rotateCameras: false,
@@ -19,6 +19,11 @@ const mapGlobals = {
   sceneAmbient: new Color3(0.01, 0.0, 0.2)
 };
 
+const submarineGlobals = {
+  isUnderwater: false,
+  surfaceChange: false
+};
+
 const renderGlobals = {
   pipelineOn: true,
   glow: false,
@@ -26,7 +31,7 @@ const renderGlobals = {
   sharpenning: false,
   antialiasing: true,
   depthOfField: false,
-  bloom: true,
+  bloom: false,
   screenshot: false
 };
 
@@ -38,4 +43,4 @@ window.globals = {
   renderGlobals
 };
 
-export { mapGlobals, renderGlobals };
+export { mapGlobals, renderGlobals, submarineGlobals };

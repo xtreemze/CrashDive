@@ -10,47 +10,36 @@ import {
   Animation,
   MeshBuilder,
   HemisphericLight,
-  DirectionalLight,
   Vector3
 } from "babylonjs";
 
 import { WaterMaterial, SkyMaterial } from "babylonjs-materials";
 
-import { mapGlobals } from "./globalVariables";
+import { mapGlobals, submarineGlobals } from "./globalVariables";
 
 declare function require(string): string;
 
 const waterBumpTexture = require("./textures/waterbump.png");
 
 function ocean(scene: Scene) {
-  let oceanSurface = MeshBuilder.CreateGround(
-    "oceanSurface",
-    {
-      height: mapGlobals.size / 2 - 4,
-      width: mapGlobals.size - 2
-    },
-    scene
-  );
-  oceanSurface.position.y -= 2;
-  let oceanFloor = MeshBuilder.CreateBox(
+  const oceanFloor = MeshBuilder.CreateBox(
     "oceanFloor",
     {
-      height: mapGlobals.size / 2 - 4,
-      width: mapGlobals.size - 2,
-      depth: mapGlobals.size - 2
+      height: mapGlobals.size / 2 - 25,
+      width: mapGlobals.size - 25,
+      depth: mapGlobals.size - 25
     },
     scene
   );
 
-  const oceanColor = new Color3(0, 0.06, 0.15) as Color3;
-  oceanFloor.position.y -= mapGlobals.size / 4;
-  const oceanFloorMaterial = new StandardMaterial("oceanFloorMaterial", scene);
-  oceanFloorMaterial.emissiveColor = oceanColor;
-  oceanFloorMaterial.disableLighting = true;
-  oceanFloorMaterial.alpha = 0.8;
   oceanFloor.flipFaces();
+  const oceanColor = new Color3(0.12, 0.27, 0.41) as Color3;
+  const oceanFloorMaterial = new StandardMaterial("oceanFloorMaterial", scene);
+  oceanFloorMaterial.disableLighting = true;
+  oceanFloorMaterial.emissiveColor = oceanColor;
+  // oceanFloorMaterial.diffuseColor = oceanColor;
+  oceanFloorMaterial.alpha = 0.6;
   oceanFloor.material = oceanFloorMaterial;
-  oceanSurface.material = oceanFloorMaterial;
 
   // Skybox
 
@@ -59,9 +48,8 @@ function ocean(scene: Scene) {
   skyboxMaterial.backFaceCulling = false as boolean;
   //skyboxMaterial._cachedDefines.FOG = true;
 
-  const skybox = Mesh.CreateBox("skyBox", 3000.0, scene) as Mesh;
-
-  skyboxMaterial.backFaceCulling = false as boolean;
+  const skybox = Mesh.CreateBox("skyBox", mapGlobals.size, scene) as Mesh;
+  // skybox.infiniteDistance = true;
 
   skybox.material = skyboxMaterial as Material;
 
@@ -82,6 +70,20 @@ function ocean(scene: Scene) {
       property,
       100,
       Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CONSTANT
+    ) as Animation;
+    animation.setKeys(keys);
+
+    scene.beginDirectAnimation(skybox, [animation], 0, 100, false, 0.2);
+  };
+  const setSkyLightDirection = function(property, from, to) {
+    const keys = [{ frame: 0, value: from }, { frame: 100, value: to }];
+
+    const animation = new Animation(
+      "animation",
+      property,
+      100,
+      Animation.ANIMATIONTYPE_VECTOR3,
       Animation.ANIMATIONLOOPMODE_CONSTANT
     ) as Animation;
     animation.setKeys(keys);
@@ -148,7 +150,7 @@ function ocean(scene: Scene) {
 
   const daylightColor = new Color3(0.89, 0.91, 0.92) as Color3;
   const oceanColorDay = new Color3(0.48, 0.54, 0.59) as Color3;
-  const duskColor = new Color3(0.74, 0.69, 0.63) as Color3;
+  const duskColor = new Color3(0.7, 0.71, 0.64) as Color3;
   const oceanColorNight = new Color3(0.25, 0.37, 0.4) as Color3;
 
   window.addEventListener("keydown", function(evt) {
@@ -156,16 +158,27 @@ function ocean(scene: Scene) {
     scene.stopAnimation(light);
     switch (evt.keyCode) {
       case 49:
-        setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
+        // setSkyConfig("material.inclination", skyboxMaterial.inclination, 0);
+        setSkyLightDirection(
+          "material.sunPosition",
+          skyboxMaterial.sunPosition,
+          new Vector3(0, 1, 0)
+        );
         setLightDirection("direction", light.direction, new Vector3(0, 1, 0));
         setLightColor("groundColor", light.groundColor, oceanColorDay);
         setLightColor("diffuse", light.diffuse, daylightColor);
         setLightConfig("intensity", light.intensity, 0.95);
         setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 1);
         setSkyConfig("material.luminance", skyboxMaterial.luminance, 1);
+        setSkyConfig("material.rayleigh", skyboxMaterial.rayleigh, 0.82);
         break; // 1
       case 50:
-        setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.485);
+        // setSkyConfig("material.inclination", skyboxMaterial.inclination, 0.485);
+        setSkyLightDirection(
+          "material.sunPosition",
+          skyboxMaterial.sunPosition,
+          new Vector3(0, 0.06, -1)
+        );
         setLightDirection(
           "direction",
           light.direction,
@@ -176,6 +189,7 @@ function ocean(scene: Scene) {
         setLightConfig("intensity", light.intensity, 0.4);
         setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 1.4);
         setSkyConfig("material.luminance", skyboxMaterial.luminance, 0.9);
+        setSkyConfig("material.rayleigh", skyboxMaterial.rayleigh, 1.6);
         break; // 2
 
       case 51:
@@ -200,11 +214,15 @@ function ocean(scene: Scene) {
   // setSkyConfig("material.inclination", skyboxMaterial.inclination, -0.44);
   skyboxMaterial.turbidity = 1.4;
   skyboxMaterial.luminance = 0.9;
-  light.direction = new Vector3(0, 0.06, -1);
+  light.direction = new Vector3(0, 0.06, -1) as Vector3;
   light.groundColor = oceanColorNight;
   light.diffuse = duskColor;
   light.intensity = 0.36;
-  skyboxMaterial.inclination = 0.485;
+  skyboxMaterial.rayleigh = 1.6;
+  //@ts-ignore
+  // skyboxMaterial.inclination = 0.485;
+  skyboxMaterial.useSunPosition = true;
+  skyboxMaterial.sunPosition = new Vector3(0, 0.06, -1) as Vector3;
 
   // Water
   const waterMesh = MeshBuilder.CreateGround(
@@ -216,23 +234,23 @@ function ocean(scene: Scene) {
     },
     scene
   ) as GroundMesh;
+
   const waterMaterial = new WaterMaterial(
     "water",
     scene,
-    new Vector2(1024, 1024)
+    new Vector2(2048, 2048)
   ) as WaterMaterial;
   waterMaterial.backFaceCulling = true as boolean;
   waterMaterial.bumpTexture = new Texture(waterBumpTexture, scene) as Texture;
-  waterMaterial.bumpHeight = 0.5 as number;
-  waterMaterial.windForce = -3 as number;
-  waterMaterial.waveHeight = 0.7 as number;
-  waterMaterial.waveLength = 0.3 as number;
+  waterMaterial.bumpHeight = 0.8 as number;
+  waterMaterial.windForce = -2.4 as number;
+  waterMaterial.waveHeight = 2.6 as number;
+  waterMaterial.waveLength = 0.32 as number;
   waterMaterial.windDirection = new Vector2(1, 1) as Vector2;
   waterMaterial.waterColor = new Color3(0, 0.54, 0.74) as Color3;
   waterMaterial.colorBlendFactor = 0.03 as number;
-
+  // waterMaterial.wireframe = true;
   waterMesh.material = waterMaterial as Material;
-
   // Clouds
   const cloud1 = MeshBuilder.CreateIcoSphere(
     "cloud",
@@ -244,14 +262,42 @@ function ocean(scene: Scene) {
   // cloudMaterial.disableLighting = true;
   cloudMaterial.diffuseColor = new Color3(1, 1, 1);
   cloud1.material = cloudMaterial;
+  // cloudMaterial.lightmapTexture = skybox;
 
-  cloud1.position.y += mapGlobals.size / 10.8;
+  cloud1.position = new Vector3(
+    mapGlobals.size / 16,
+    mapGlobals.size / 40,
+    mapGlobals.size / 2.8
+  );
 
   // Assign the water material
 
   waterMaterial.addToRenderList(skybox);
   waterMaterial.addToRenderList(oceanFloor);
   waterMaterial.addToRenderList(cloud1);
+
+  waterMaterial.alpha = 0.96;
+  waterMaterial.backFaceCulling = false;
+  oceanFloorMaterial.backFaceCulling = false;
+
+  scene.registerAfterRender(() => {
+    oceanFloor.position = new Vector3(
+      scene.activeCamera.position.x,
+      -mapGlobals.size / 4 + 12.43,
+      scene.activeCamera.position.z
+    );
+    waterMesh.position = new Vector3(
+      scene.activeCamera.position.x,
+      0,
+      scene.activeCamera.position.z
+    );
+
+    skybox.position = new Vector3(
+      scene.activeCamera.position.x,
+      0,
+      scene.activeCamera.position.z
+    );
+  });
 }
 
 export { ocean };
