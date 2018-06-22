@@ -21,7 +21,6 @@ const mapGlobals = {
 
 const submarineGlobals = {
   isUnderwater: false,
-  surfaceChange: false
 };
 
 const renderGlobals = {

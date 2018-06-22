@@ -1,15 +1,12 @@
 import {
   Scene,
   Vector3,
-  ArcRotateCamera,
   Tools,
   Engine,
   UniversalCamera,
-  Camera,
   DefaultRenderingPipeline
 } from "babylonjs";
 import { mapGlobals, renderGlobals } from "./globalVariables";
-import { renderPipeline } from "./renderPipeline";
 
 function camera(
   scene: Scene,
@@ -18,14 +15,6 @@ function camera(
   camera: UniversalCamera
 ) {
   // Camera1
-  // camera = new ArcRotateCamera(
-  //   "overhead",
-  //   Math.PI / 2,
-  //   Math.PI / 2,
-  //   100,
-  //   new Vector3(0, 35, 0),
-  //   scene
-  // );
   camera = new UniversalCamera(
     "1stPerson",
     new Vector3(mapGlobals.size / 12, 25, mapGlobals.size / 2.1),
@@ -34,17 +23,6 @@ function camera(
   camera.setTarget(new Vector3(0, 25, 0));
   // Attach Control
   camera.attachControl(canvas, true);
-
-  // // Upper Beta Limit
-  // camera.upperBetaLimit = Math.PI / 2.01;
-
-  // // Upper Radius Limit
-  // camera.upperRadiusLimit = mapGlobals.size / 2;
-
-  // // Lower Radius Limit
-  // camera.lowerRadiusLimit = mapGlobals.size / 12;
-
-  // camera.panningDistanceLimit = mapGlobals.size / 5;
 
   const rotateCamera = camera => {
     scene.registerBeforeRender(() => {
@@ -57,23 +35,6 @@ function camera(
   if (!mapGlobals.rotateCameras) {
     rotateCamera(camera);
   }
-
-  const allCameras = scene.cameras;
-
-  let deltaTime = Date.now();
-
-  scene.registerAfterRender(() => {
-    if (Date.now() - deltaTime > mapGlobals.cameraCutDelay) {
-      deltaTime = Date.now();
-      scene.setActiveCameraByID(allCameras[0].id);
-      const previousCamera = allCameras.shift();
-      allCameras.push(previousCamera);
-      scene.activeCamera.inertia = 0;
-      setTimeout(() => {
-        scene.activeCamera.inertia = 0.9;
-      }, 100);
-    }
-  });
 
   if (renderGlobals.screenshot) {
     setTimeout(() => {

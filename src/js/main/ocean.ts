@@ -15,7 +15,7 @@ import {
 
 import { WaterMaterial, SkyMaterial } from "babylonjs-materials";
 
-import { mapGlobals, submarineGlobals } from "./globalVariables";
+import { mapGlobals } from "./globalVariables";
 
 declare function require(string): string;
 
@@ -37,7 +37,6 @@ function ocean(scene: Scene) {
   const oceanFloorMaterial = new StandardMaterial("oceanFloorMaterial", scene);
   oceanFloorMaterial.disableLighting = true;
   oceanFloorMaterial.emissiveColor = oceanColor;
-  // oceanFloorMaterial.diffuseColor = oceanColor;
   oceanFloorMaterial.alpha = 0.6;
   oceanFloor.material = oceanFloorMaterial;
 
@@ -49,7 +48,6 @@ function ocean(scene: Scene) {
   //skyboxMaterial._cachedDefines.FOG = true;
 
   const skybox = Mesh.CreateBox("skyBox", mapGlobals.size, scene) as Mesh;
-  // skybox.infiniteDistance = true;
 
   skybox.material = skyboxMaterial as Material;
 
@@ -136,11 +134,6 @@ function ocean(scene: Scene) {
   };
 
   // Light
-  // const light = new DirectionalLight(
-  //   "light",
-  //   new Vector3(0, -1, 0),
-  //   scene
-  // ) as DirectionalLight;
 
   const light = new HemisphericLight(
     "light",
@@ -211,7 +204,6 @@ function ocean(scene: Scene) {
     }
   });
   // Set to Day
-  // setSkyConfig("material.inclination", skyboxMaterial.inclination, -0.44);
   skyboxMaterial.turbidity = 1.4;
   skyboxMaterial.luminance = 0.9;
   light.direction = new Vector3(0, 0.06, -1) as Vector3;
@@ -219,8 +211,6 @@ function ocean(scene: Scene) {
   light.diffuse = duskColor;
   light.intensity = 0.36;
   skyboxMaterial.rayleigh = 1.6;
-  //@ts-ignore
-  // skyboxMaterial.inclination = 0.485;
   skyboxMaterial.useSunPosition = true;
   skyboxMaterial.sunPosition = new Vector3(0, 0.06, -1) as Vector3;
 
@@ -262,7 +252,6 @@ function ocean(scene: Scene) {
   // cloudMaterial.disableLighting = true;
   cloudMaterial.diffuseColor = new Color3(1, 1, 1);
   cloud1.material = cloudMaterial;
-  // cloudMaterial.lightmapTexture = skybox;
 
   cloud1.position = new Vector3(
     mapGlobals.size / 16,
