@@ -63,7 +63,7 @@ class Game {
     this._scene.workerCollisions = true;
 
     camera(this._scene, this._canvas, this._engine, this._camera);
-    ocean(this._scene);
+    ocean(this._scene, this._canvas);
 
     if (mapGlobals.diagnosticsOn) {
       this._scene.debugLayer.show({ popup: true, initialTab: 2 });

@@ -20,6 +20,15 @@ function camera(
     new Vector3(mapGlobals.size / 12, 25, mapGlobals.size / 2.1),
     scene
   ) as UniversalCamera;
+
+  // Faster mobile control
+  camera.fov = 1;
+  camera.inertia = 0.72;
+  camera.speed = 3;
+  camera.angularSensibility = 2000;
+  camera.touchMoveSensibility = 200;
+  camera.touchAngularSensibility = 15000;
+
   camera.setTarget(new Vector3(0, 25, 0));
   // Attach Control
   camera.attachControl(canvas, true);

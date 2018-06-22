@@ -15,12 +15,12 @@ const mapGlobals = {
   soundLimit: 3,
   projectileSounds: 0, // Sounds currently playing
   projectileSoundLimit: 1, // Simultaneous sound limit
-  ambientColor: new Color3(0.2, 0.2, 0.2),
-  sceneAmbient: new Color3(0.01, 0.0, 0.2)
+  ambientColor: new Color3(0.25, 0.37, 0.4) as Color3,
+  sceneAmbient: new Color3(0.48, 0.54, 0.59) as Color3
 };
 
 const submarineGlobals = {
-  isUnderwater: false,
+  isUnderwater: false
 };
 
 const renderGlobals = {
