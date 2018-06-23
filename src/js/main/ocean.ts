@@ -260,7 +260,10 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   );
 
   // const cloudMaterial = new StandardMaterial("cloudMaterial", scene);
-  const cloudMaterial = new PBRMetallicRoughnessMaterial("cloudMaterial", scene);
+  const cloudMaterial = new PBRMetallicRoughnessMaterial(
+    "cloudMaterial",
+    scene
+  );
   // cloudMaterial.alpha = 0.8;
   // cloudMaterial.disableLighting = true;
   cloudMaterial.metallic = 0.45; // reflection level
@@ -270,7 +273,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
 
   cloud1.position = new Vector3(
     mapGlobals.size / 16,
-    mapGlobals.size / 40,
+    mapGlobals.size / 30,
     mapGlobals.size / 2.8
   );
 

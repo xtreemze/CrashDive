@@ -17,33 +17,21 @@ function camera(
   // Camera1
   camera = new UniversalCamera(
     "1stPerson",
-    new Vector3(mapGlobals.size / 12, 25, mapGlobals.size / 2.1),
+    new Vector3(mapGlobals.size / 12, 100, mapGlobals.size / 2.1),
     scene
   ) as UniversalCamera;
 
   // Faster mobile control
   camera.fov = 1;
   camera.inertia = 0.72;
-  camera.speed = 3;
+  camera.speed = 10;
   camera.angularSensibility = 2000;
   camera.touchMoveSensibility = 200;
-  camera.touchAngularSensibility = 15000;
+  camera.touchAngularSensibility = 20000;
 
   camera.setTarget(new Vector3(0, 25, 0));
   // Attach Control
   camera.attachControl(canvas, true);
-
-  const rotateCamera = camera => {
-    scene.registerBeforeRender(() => {
-      camera.alpha += Math.PI / (360 * mapGlobals.rotationSpeedMultiplier);
-      if (camera.alpha <= Math.PI) {
-      }
-    });
-  };
-
-  if (!mapGlobals.rotateCameras) {
-    rotateCamera(camera);
-  }
 
   if (renderGlobals.screenshot) {
     setTimeout(() => {

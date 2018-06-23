@@ -45,25 +45,26 @@ class Game {
       // stencil: true,
       // doNotHandleContextLost: true
     });
-    // this._engine.enableOfflineSupport = false;
-    // this._engine.disableManifestCheck = true;
+    this._engine.enableOfflineSupport = false;
+    this._engine.disableManifestCheck = true;
   }
 
   createScene(): void {
     this._scene = new Scene(this._engine);
+
+    // this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
+
+    // this._scene.workerCollisions = true;
+
+    camera(this._scene, this._canvas, this._engine, this._camera);
+    ocean(this._scene, this._canvas);
+
     if (mapGlobals.optimizerOn) {
       const options = SceneOptimizerOptions.HighDegradationAllowed();
       const optimizer = new SceneOptimizer(this._scene, options);
 
       optimizer.start();
     }
-
-    this._scene.enablePhysics(new Vector3(0, -9.81, 0), new CannonJSPlugin());
-
-    this._scene.workerCollisions = true;
-
-    camera(this._scene, this._canvas, this._engine, this._camera);
-    ocean(this._scene, this._canvas);
 
     if (mapGlobals.diagnosticsOn) {
       this._scene.debugLayer.show({ popup: true, initialTab: 2 });
@@ -91,7 +92,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // soundPrep();
   game.doRender();
 
-  window.addEventListener("load", () => {
-    // titleScreen(game._canvas);
-  });
+  // window.addEventListener("load", () => {
+  // titleScreen(game._canvas);
+  // });
 });
