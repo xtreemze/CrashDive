@@ -19,8 +19,8 @@ export function dayFunction(
   setLightDirection("direction", light.direction, new Vector3(0, 1, 0));
   setLightColor("groundColor", light.groundColor, oceanColorDay);
   setLightColor("diffuse", light.diffuse, daylightColor);
-  setLightConfig("intensity", light.intensity, 0.95);
+  setLightConfig("intensity", light.intensity, 1.05);
   setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 1);
-  setSkyConfig("material.luminance", skyboxMaterial.luminance, 1);
+  setSkyConfig("material.luminance", skyboxMaterial.luminance, 1.02);
   setSkyConfig("material.rayleigh", skyboxMaterial.rayleigh, 0.82);
 }

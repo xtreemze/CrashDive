@@ -19,8 +19,8 @@ export function duskFunction(
   setLightDirection("direction", light.direction, new Vector3(0, 0.06, -1));
   setLightColor("groundColor", light.groundColor, oceanColorNight);
   setLightColor("diffuse", light.diffuse, duskColor);
-  setLightConfig("intensity", light.intensity, 0.4);
+  setLightConfig("intensity", light.intensity, 0.095);
   setSkyConfig("material.turbidity", skyboxMaterial.turbidity, 1.4);
-  setSkyConfig("material.luminance", skyboxMaterial.luminance, 0.9);
+  setSkyConfig("material.luminance", skyboxMaterial.luminance, 0.95);
   setSkyConfig("material.rayleigh", skyboxMaterial.rayleigh, 1.6);
 }

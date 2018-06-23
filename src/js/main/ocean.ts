@@ -202,13 +202,13 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
         break;
     }
   });
-  // Set to Day
+  // Set to Dusk
   skyboxMaterial.turbidity = 1.4;
-  skyboxMaterial.luminance = 0.9;
+  skyboxMaterial.luminance = 0.95;
   light.direction = new Vector3(0, 0.06, -1) as Vector3;
   light.groundColor = oceanColorNight;
   light.diffuse = duskColor;
-  light.intensity = 0.36;
+  light.intensity = 0.195;
   skyboxMaterial.rayleigh = 1.6;
   skyboxMaterial.useSunPosition = true;
   skyboxMaterial.sunPosition = new Vector3(0, 0.06, -1) as Vector3;
@@ -263,8 +263,8 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   const cloudMaterial = new PBRMetallicRoughnessMaterial("cloudMaterial", scene);
   // cloudMaterial.alpha = 0.8;
   // cloudMaterial.disableLighting = true;
-  cloudMaterial.metallic = 0.5; // reflection level
-  cloudMaterial.roughness = 0.5; // specular reduction level
+  cloudMaterial.metallic = 0.65; // reflection level
+  cloudMaterial.roughness = 0.55; // specular reduction level
   cloudMaterial.baseColor = new Color3(0.5, 0.5, 0.5);
   cloud1.material = cloudMaterial;
 
@@ -277,7 +277,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   const probe = new BABYLON.ReflectionProbe("main", 512, scene);
   probe.renderList.push(skybox);
   probe.renderList.push(waterMesh);
-  probe.renderList.push(oceanFloor);
+  // probe.renderList.push(oceanFloor);
   probe.refreshRate = 3;
   probe.attachToMesh(cloud1);
   cloudMaterial.environmentTexture = probe.cubeTexture;
