@@ -304,6 +304,8 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
     scene.activeCamera.position.z
   );
 
+  skybox.infiniteDistance = true;
+
   scene.registerAfterRender(() => {
     oceanFloor.position = new Vector3(
       scene.activeCamera.position.x,
@@ -316,11 +318,11 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
     //   scene.activeCamera.position.z
     // );
 
-    skybox.position = new Vector3(
-      scene.activeCamera.position.x,
-      0,
-      scene.activeCamera.position.z
-    );
+    // skybox.position = new Vector3(
+    //   scene.activeCamera.position.x,
+    //   0,
+    //   scene.activeCamera.position.z
+    // );
   });
 }
 

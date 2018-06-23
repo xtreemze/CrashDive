@@ -27,7 +27,7 @@ function camera(
   camera.speed = 10;
   camera.angularSensibility = 2000;
   camera.touchMoveSensibility = 200;
-  camera.touchAngularSensibility = 20000;
+  camera.touchAngularSensibility = 28000;
 
   camera.setTarget(new Vector3(0, 25, 0));
   // Attach Control
