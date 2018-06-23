@@ -32,6 +32,11 @@ function gui(
       left: 10vw;
       border-radius: 4rem;
       user-select: none;
+      outline: none;
+      border: none;
+      box-shadow: 0px 0px 0.5rem #000000f5;
+  }
+
       `
   );
   const body = document.getElementById("body");
