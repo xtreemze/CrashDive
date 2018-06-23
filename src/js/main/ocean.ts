@@ -14,7 +14,9 @@ import {
   Animation,
   MeshBuilder,
   HemisphericLight,
-  Vector3
+  Vector3,
+  PBRSpecularGlossinessMaterial,
+  PBRMetallicRoughnessMaterial
 } from "babylonjs";
 
 import { WaterMaterial, SkyMaterial } from "babylonjs-materials";
@@ -248,9 +250,8 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   waterMaterial.waveLength = 0.12 as number;
   waterMaterial.windDirection = new Vector2(1, 1) as Vector2;
   waterMaterial.waterColor = new Color3(0, 0.54, 0.74) as Color3;
-  waterMaterial.colorBlendFactor = 0.03 as number;
-  // waterMaterial.wireframe = true;
-  waterMesh.material = waterMaterial as Material;
+  waterMaterial.colorBlendFactor = 0.2 as number;
+  waterMesh.material = waterMaterial as WaterMaterial;
   // Clouds
   const cloud1 = MeshBuilder.CreateIcoSphere(
     "cloud",
@@ -258,10 +259,13 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
     scene
   );
 
-  const cloudMaterial = new StandardMaterial("cloudMaterial", scene);
+  // const cloudMaterial = new StandardMaterial("cloudMaterial", scene);
+  const cloudMaterial = new PBRMetallicRoughnessMaterial("cloudMaterial", scene);
   // cloudMaterial.alpha = 0.8;
-  // cloudMaterial.disableLighting = true;
-  cloudMaterial.diffuseColor = new Color3(1, 1, 1);
+  cloudMaterial.disableLighting = true;
+  cloudMaterial.metallic = 0.032;
+  cloudMaterial.roughness = 0.88;
+  cloudMaterial.baseColor = new Color3(5, 5, 5);
   cloud1.material = cloudMaterial;
 
   cloud1.position = new Vector3(
@@ -272,12 +276,14 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
 
   const probe = new BABYLON.ReflectionProbe("main", 512, scene);
   probe.renderList.push(skybox);
-  probe.renderList.push(oceanFloor);
+  probe.renderList.push(waterMesh);
+  // probe.renderList.push(oceanFloor);
   probe.refreshRate = 3;
   probe.attachToMesh(cloud1);
-  cloudMaterial.reflectionTexture = probe.cubeTexture;
-  cloudMaterial.reflectionFresnelParameters = new BABYLON.FresnelParameters();
-  cloudMaterial.reflectionFresnelParameters.bias = 0.02;
+  cloudMaterial.environmentTexture = probe.cubeTexture;
+  // cloudMaterial.reflectionTexture = probe.cubeTexture;
+  // cloudMaterial.reflectionFresnelParameters = new BABYLON.FresnelParameters();
+  // cloudMaterial.reflectionFresnelParameters.bias = 0.02;
 
   // Assign the water material
 
