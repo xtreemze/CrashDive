@@ -238,7 +238,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   const waterMaterial = new WaterMaterial(
     "water",
     scene,
-    new Vector2(2048, 2048)
+    new Vector2(512, 512)
   ) as WaterMaterial;
   waterMaterial.backFaceCulling = true as boolean;
   waterMaterial.bumpTexture = new Texture(waterBumpTexture, scene) as Texture;
@@ -254,9 +254,10 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   // Clouds
   const cloud1 = MeshBuilder.CreateIcoSphere(
     "cloud",
-    { radius: 100, subdivisions: 5 },
+    { radius: 100, subdivisions: 3 },
     scene
   );
+
   const cloudMaterial = new StandardMaterial("cloudMaterial", scene);
   // cloudMaterial.alpha = 0.8;
   // cloudMaterial.disableLighting = true;
@@ -268,6 +269,13 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
     mapGlobals.size / 40,
     mapGlobals.size / 2.8
   );
+
+  const probe = new BABYLON.ReflectionProbe("main", 512, scene);
+  probe.renderList.push(skybox);
+  probe.renderList.push(oceanFloor);
+  cloudMaterial.reflectionTexture = probe.cubeTexture;
+  cloudMaterial.reflectionFresnelParameters = new BABYLON.FresnelParameters();
+  cloudMaterial.reflectionFresnelParameters.bias = 0.02;
 
   // Assign the water material
 
