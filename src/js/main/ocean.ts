@@ -250,7 +250,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   waterMaterial.waveLength = 0.12 as number;
   waterMaterial.windDirection = new Vector2(1, 1) as Vector2;
   waterMaterial.waterColor = new Color3(0, 0.54, 0.74) as Color3;
-  waterMaterial.colorBlendFactor = 0.2 as number;
+  waterMaterial.colorBlendFactor = 0.05 as number;
   waterMesh.material = waterMaterial as WaterMaterial;
   // Clouds
   const cloud1 = MeshBuilder.CreateIcoSphere(
@@ -263,9 +263,9 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   const cloudMaterial = new PBRMetallicRoughnessMaterial("cloudMaterial", scene);
   // cloudMaterial.alpha = 0.8;
   // cloudMaterial.disableLighting = true;
-  cloudMaterial.metallic = 0.65; // reflection level
-  cloudMaterial.roughness = 0.55; // specular reduction level
-  cloudMaterial.baseColor = new Color3(0.5, 0.5, 0.5);
+  cloudMaterial.metallic = 0.45; // reflection level
+  cloudMaterial.roughness = 0.95; // specular reduction level
+  cloudMaterial.baseColor = new Color3(0.8, 0.8, 0.8);
   cloud1.material = cloudMaterial;
 
   cloud1.position = new Vector3(
@@ -278,7 +278,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   probe.renderList.push(skybox);
   probe.renderList.push(waterMesh);
   probe.renderList.push(oceanFloor);
-  probe.refreshRate = 3;
+  // probe.refreshRate = 3;
   probe.attachToMesh(cloud1);
   cloudMaterial.environmentTexture = probe.cubeTexture;
   // cloudMaterial.reflectionTexture = probe.cubeTexture;
