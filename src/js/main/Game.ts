@@ -20,6 +20,7 @@ import runtime = require("offline-plugin/runtime");
 
 import { titleScreen } from "./titleScreen";
 import { soundPrep, spatialization } from "./sounds";
+import { particle } from "./particle";
 
 // runtime.install({
 //   onUpdating: () => {},
@@ -58,7 +59,7 @@ class Game {
 
     camera(this._scene, this._canvas, this._engine, this._camera);
     ocean(this._scene, this._canvas);
-
+    particle(this._scene);
     if (mapGlobals.optimizerOn) {
       const options = SceneOptimizerOptions.HighDegradationAllowed();
       const optimizer = new SceneOptimizer(this._scene, options);

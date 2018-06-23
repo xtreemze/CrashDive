@@ -324,6 +324,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
     //   scene.activeCamera.position.z
     // );
   });
+
 }
 
 export { ocean };
