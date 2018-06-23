@@ -277,7 +277,7 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   const probe = new BABYLON.ReflectionProbe("main", 512, scene);
   probe.renderList.push(skybox);
   probe.renderList.push(waterMesh);
-  // probe.renderList.push(oceanFloor);
+  probe.renderList.push(oceanFloor);
   probe.refreshRate = 3;
   probe.attachToMesh(cloud1);
   cloudMaterial.environmentTexture = probe.cubeTexture;
