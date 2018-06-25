@@ -264,7 +264,6 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
     "cloudMaterial",
     scene
   );
-  // cloudMaterial.alpha = 0.8;
   // cloudMaterial.disableLighting = true;
   cloudMaterial.metallic = 0.45; // reflection level
   cloudMaterial.roughness = 0.95; // specular reduction level
@@ -284,12 +283,8 @@ function ocean(scene: Scene, canvas: HTMLCanvasElement) {
   // probe.refreshRate = 3;
   probe.attachToMesh(cloud1);
   cloudMaterial.environmentTexture = probe.cubeTexture;
-  // cloudMaterial.reflectionTexture = probe.cubeTexture;
-  // cloudMaterial.reflectionFresnelParameters = new BABYLON.FresnelParameters();
-  // cloudMaterial.reflectionFresnelParameters.bias = 0.02;
 
   // Assign the water material
-
   waterMaterial.addToRenderList(skybox);
   waterMaterial.addToRenderList(oceanFloor);
   waterMaterial.addToRenderList(cloud1);
